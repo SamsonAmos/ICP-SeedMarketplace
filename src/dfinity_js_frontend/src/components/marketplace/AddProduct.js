@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import { Button, Modal, Form, FloatingLabel } from "react-bootstrap";
 
 const AddProduct = ({ save }) => {
-  const [title, setTitle] = useState("");
-  const [attachmentURL, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [price, setPrice] = useState(0);
-  const isFormFilled = () => title && attachmentURL && description && location && price;
+  const [gymName, setGymName] = useState("");
+  const [gymImgUrl, setGymImgUrl] = useState("");
+  const [gymLocation, setGymLocation] = useState("");
+  //const [price, setPrice] = useState(0);
+  const isFormFilled = () => gymName && gymImgUrl && gymLocation;
 
   const [show, setShow] = useState(false);
 
@@ -27,25 +26,26 @@ const AddProduct = ({ save }) => {
       </Button>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>New Product</Modal.Title>
+          <Modal.Title>Create Gym</Modal.Title>
         </Modal.Header>
         <Form>
+
           <Modal.Body>
             <FloatingLabel
-              controlId="inputName"
-              label="Product title"
+              controlId="gymName"
+              label="Gym Name"
               className="mb-3"
             >
               <Form.Control
                 type="text"
                 onChange={(e) => {
-                  setTitle(e.target.value);
+                  setGymName(e.target.value);
                 }}
-                placeholder="Enter title of product"
+                placeholder="Enter name of gym"
               />
             </FloatingLabel>
             <FloatingLabel
-              controlId="inputUrl"
+              controlId="gymImgUrl"
               label="Image URL"
               className="mb-3"
             >
@@ -53,47 +53,21 @@ const AddProduct = ({ save }) => {
                 type="text"
                 placeholder="Image URL"
                 onChange={(e) => {
-                  setImage(e.target.value);
+                  setGymImgUrl(e.target.value);
                 }}
               />
             </FloatingLabel>
             <FloatingLabel
-              controlId="inputDescription"
-              label="Description"
+              controlId="gymLocation"
+              label="Gym Location"
               className="mb-3"
             >
               <Form.Control
                 as="textarea"
-                placeholder="description"
+                placeholder="Enter gym location"
                 style={{ height: "80px" }}
                 onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="inputLocation"
-              label="Location"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="Location"
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                }}
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="inputPrice"
-              label="Price"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="Price"
-                onChange={(e) => {
-                  setPrice(e.target.value);
+                  setGymLocation(e.target.value);
                 }}
               />
             </FloatingLabel>
@@ -108,16 +82,14 @@ const AddProduct = ({ save }) => {
             disabled={!isFormFilled()}
             onClick={() => {
               save({
-                title,
-                attachmentURL,
-                description,
-                location,
-                price,
+                gymName,
+                gymImgUrl,
+                gymLocation,
               });
               handleClose();
             }}
           >
-            Save product
+            Create Gym
           </Button>
         </Modal.Footer>
       </Modal>

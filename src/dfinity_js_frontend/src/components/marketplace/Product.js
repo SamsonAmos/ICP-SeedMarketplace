@@ -4,8 +4,7 @@ import { Card, Button, Col, Badge, Stack } from "react-bootstrap";
 import { Principal } from "@dfinity/principal";
 
 const Product = ({ product, buy }) => {
-  const { id, price, title, description, location, attachmentURL, seller, soldAmount } =
-    product;
+  const { id, gymImgUrl, gymLocation } = product;
 
   const triggerBuy = () => {
     buy(id);
@@ -14,21 +13,22 @@ const Product = ({ product, buy }) => {
   return (
     <Col key={id}>
       <Card className=" h-100">
-        <Card.Header>
+        {/* <Card.Header>
           <Stack direction="horizontal" gap={2}>
             <span className="font-monospace text-secondary">{Principal.from(seller).toText()}</span>
             <Badge bg="secondary" className="ms-auto">
               {soldAmount.toString()} Sold
             </Badge>
           </Stack>
-        </Card.Header>
+        </Card.Header> */}
         <div className=" ratio ratio-4x3">
-          <img src={attachmentURL} alt={title} style={{ objectFit: "cover" }} />
+          <img src={gymImgUrl} alt={title} style={{ objectFit: "cover" }} />
         </div>
         <Card.Body className="d-flex  flex-column text-center">
-          <Card.Title>{title}</Card.Title>
-          <Card.Text className="flex-grow-1 ">{description}</Card.Text>
-          <Card.Text className="text-secondary">
+          <Card.Title>{id}</Card.Title>
+          <Card.Text className="flex-grow-1 ">{gymLocation}</Card.Text>
+          
+          {/* <Card.Text className="text-secondary">
             <span>{location}</span>
           </Card.Text>
           <Card.Text className="text-secondary">
@@ -40,7 +40,8 @@ const Product = ({ product, buy }) => {
             className="w-100 py-3"
           >
             Buy for {(price / BigInt(10**8)).toString()} ICP
-          </Button>
+          </Button> */}
+
         </Card.Body>
       </Card>
     </Col>

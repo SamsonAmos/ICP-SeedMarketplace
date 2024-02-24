@@ -18,8 +18,7 @@ const Gym = Record({
     gymImgUrl: text,
     gymLocation: text,
     members : Vec(text),
-    gymServices : Vec(GymService),
-    memo: nat64
+    gymServices : Vec(GymService)
 });
 
 const GymPayload = Record({
@@ -64,15 +63,14 @@ getGymById: query([text], Result(Gym, Message), (id) => {
     return Ok(event.Some);
 }),
 
-addGym: update([Gym], Result(Gym, Message), (payload) => {
+addGym: update([GymPayload], Result(Gym, Message), (payload) => {
     if (typeof payload !== "object" || Object.keys(payload).length === 0) {
         return Err({ NotFound: "invalid payload" })
     }
-    const gym = {...payload, id: uuidv4(), owner: ic.caller(),   attendees : [] };
-    
+    const gym = {...payload, id: uuidv4(), owner: ic.caller(),   members : [], gymServices : []};
 
-    gymStorage.insert(gym.memo, gym);
-    discardByTimeout(gym.memo, ORDER_RESERVATION_PERIOD);
+    gymStorage.insert(gym.id, gym);
+    //discardByTimeout(gym.id, ORDER_RESERVATION_PERIOD);
     return Ok(gym);
 }),
 

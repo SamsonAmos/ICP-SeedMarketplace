@@ -7,8 +7,8 @@ import { Row } from "react-bootstrap";
 
 import { NotificationSuccess, NotificationError } from "../utils/Notifications";
 import {
-  getProducts as getProductList,
-  createProduct, buyProduct
+  getAllGyms,
+  createGym, buyProduct
 } from "../../utils/marketplace";
 
 const Products = () => {
@@ -19,7 +19,7 @@ const Products = () => {
   const getProducts = useCallback(async () => {
     try {
       setLoading(true);
-      setProducts(await getProductList());
+      setProducts(await getAllGyms());
     } catch (error) {
       console.log({ error });
     } finally {
@@ -30,9 +30,9 @@ const Products = () => {
   const addProduct = async (data) => {
     try {
       setLoading(true);
-      const priceStr = data.price;
-      data.price = parseInt(priceStr, 10) * 10**8;
-      createProduct(data).then((resp) => {
+      // const priceStr = data.price;
+      // data.price = parseInt(priceStr, 10) * 10**8;
+      createGym(data).then((resp) => {
         getProducts();
       });
       toast(<NotificationSuccess text="Product added successfully." />);
@@ -45,21 +45,21 @@ const Products = () => {
   };
 
   //  function to initiate transaction
-  const buy = async (id) => {
-    try {
-      setLoading(true);
-      await buyProduct({
-        id
-      }).then((resp) => {
-        getProducts();
-        toast(<NotificationSuccess text="Product bought successfully" />);
-      });
-    } catch (error) {
-      toast(<NotificationError text="Failed to purchase product." />);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const buy = async (id) => {
+  //   try {
+  //     setLoading(true);
+  //     await buyProduct({
+  //       id
+  //     }).then((resp) => {
+  //       getProducts();
+  //       toast(<NotificationSuccess text="Product bought successfully" />);
+  //     });
+  //   } catch (error) {
+  //     toast(<NotificationError text="Failed to purchase product." />);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     getProducts();

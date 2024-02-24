@@ -1,13 +1,13 @@
 import { Principal } from "@dfinity/principal";
 import { transferICP } from "./ledger";
 
-export async function createProduct(product) {
-  return window.canister.marketplace.addProduct(product);
+export async function createGym(gym) {
+  return window.canister.marketplace.addGym(gym);
 }
 
-export async function getProducts() {
+export async function getAllGyms() {
   try {
-    return await window.canister.marketplace.getProducts();
+    return await window.canister.marketplace.getAllGyms();
   } catch (err) {
     if (err.name === "AgentHTTPResponseError") {
       const authClient = window.auth.client;
