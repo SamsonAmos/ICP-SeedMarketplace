@@ -6,15 +6,34 @@ export async function createGym(gym) {
 }
 
 export async function getAllGyms() {
+  // try {
+  //   return await window.canister.marketplace.getAllGyms();
+  // } catch (err) {
+  //   if (err.name === "AgentHTTPResponseError") {
+  //     const authClient = window.auth.client;
+  //     await authClient.logout();
+  //   }
+  //   return [];
+  // }
+
   try {
-    return await window.canister.marketplace.getAllGyms();
+    const result = await window.canister.marketplace.getAllGym();
+    console.log("Result:", result);
+    return result;
   } catch (err) {
+    // Log the error for debugging
+    console.error("Error fetching gyms:", err);
+  
+    // Handle specific error cases based on their properties
     if (err.name === "AgentHTTPResponseError") {
       const authClient = window.auth.client;
+      // Logout user if there's a specific HTTP response error
       await authClient.logout();
     }
+    // Return an empty array in case of error
     return [];
   }
+  
 }
 
 export async function buyProduct(product) {

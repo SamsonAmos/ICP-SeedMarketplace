@@ -51,9 +51,10 @@ const icpCanister = Ledger(Principal.fromText("ryjl3-tyaaa-aaaaa-aaaba-cai"));
 
 export default Canister({
 
-getAllGyms: query([], Vec(Gym), () =>  {
+getAllGym: query([], Vec(Gym), () =>  {
     return gymStorage.values();
 }),
+
 
 getGymById: query([text], Result(Gym, Message), (id) => {
     const event = gymStorage.get(id);
@@ -67,10 +68,9 @@ addGym: update([GymPayload], Result(Gym, Message), (payload) => {
     if (typeof payload !== "object" || Object.keys(payload).length === 0) {
         return Err({ NotFound: "invalid payload" })
     }
-    const gym = {...payload, id: uuidv4(), owner: ic.caller(),   members : [], gymServices : []};
+    const gym = { id: uuidv4(), owner: ic.caller(),   members : [], gymServices : [], ...payload};
 
     gymStorage.insert(gym.id, gym);
-    //discardByTimeout(gym.id, ORDER_RESERVATION_PERIOD);
     return Ok(gym);
 }),
 
